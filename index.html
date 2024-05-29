@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Mesto</h1>
+    </header>
+
+    <div id="app">
+    <div class="div1">
+        <div class="container">
+            <img src="images/images.jpg">
+            <div class="text">
+                <div class="name-container">
+                    <h1 class="name">{{ user.name }}</h1>
+                    <img style="font-size: 20px" class="edit-icon" @click="isEditModalOpen=true" alt="" src="images/edit-icon.svg">
+                </div>
+                <h3 class="personal-info">{{ user.position }}</h3>
+            </div>
+        </div>
+        <div class="button" @click="openCreateModal()">+</div>
+    </div>
+        <div class="gallery">
+            <div class="gallery-item" v-for="(image,index) in images" :key="index">
+                <img class="trash-icon" src="images/trash.svg" alt="" @click="openDeleteModal(index)">
+                <img class="image" :src="image.src" :alt="image.alt" @click="openFullScreenImageModal(image)">
+                <div class="img-info">
+                    <div class="container">
+                        <h1><b>{{image.title}}</b></h1>
+                        <img class="like" v-if="image.liked" @click="image.liked=false" src="images/liked.png">
+                        <img class="like" v-if="!image.liked" @click="image.liked=true" src="images/white-heart-icon-png-26.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-container" v-if="isDeleteModalOpen">
+            <section class="create-modal delete-modal">
+                <img class="close-icon" src="images/close-icon.svg" @click="closeDeleteModal()">
+                <h1 class="delete-message">Удалить картинку?</h1>
+                <div class="buttons-container">
+                    <button class="modal-button delete" @click="deleteSelectedImage()" id="close-button">Да</button>
+                    <button class="modal-button delete" @click="closeDeleteModal()" id="open-button">Нет</button>
+                </div>
+            </section>
+            <div class="overlay" v-if="isDeleteModalOpen"></div>
+        </div>
+
+        <div class="modal-container" v-if="isCreateModalOpen">
+            <section class="create-modal">
+                <h1>Новое место</h1>
+                <img class="close-create-icon" src="images/close-icon.svg" @click="closeCreateModal()">
+                <form @submit.prevent="addImage">
+                    <input class="create-input" v-model="image.title" type="text" required placeholder="Название">
+                    <input class="create-input" v-model="image.src" type="text" required placeholder="Ссылка на картинку">
+                    <button class="modal-button" type="submit">Сохранить</button>
+                </form>
+            </section>
+            <div class="overlay" v-if="isCreateModalOpen"></div>
+        </div>
+
+
+    <div class="modal-container" v-if="isFullScreenImageModalOpen">
+        <section class="modal">
+            <div class="full-image-container">
+                <img class="close-fullscreen-icon" src="images/close-icon.svg" @click="closeFullScreenImageModal()">
+                <img class="full-image" :src="this.image.src" :alt="this.image.alt">
+                <h3 class="full-image-title">{{this.image.title}}</h3>
+            </div>
+        </section>
+        <div class="overlay"></div>
+    </div>
+
+    <div class="modal-container" v-if="isEditModalOpen" @click="openEditModal()">
+        <section class="create-modal">
+            <h1>Личная информация</h1>
+            <img class="close-create-icon" src="images/close-icon.svg" @click="closeEditModal()">
+            <form @submit.prevent="updateUser">
+                <input class="create-input" v-model="user.name" type="text" required placeholder="Имя">
+                <input class="create-input" v-model="user.position" type="text" required placeholder="должность">
+                <button class="modal-button" type="submit" @click="closeEditModal">Редактировать</button>
+            </form>
+        </section>
+        <div class="overlay" v-if="isEditModalOpen"></div>
+    </div>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="scripts/gallery-script.js"></script>
+    
+</body>
+</html>
