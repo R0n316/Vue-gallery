@@ -18,7 +18,7 @@
             <div class="text">
                 <div class="name-container">
                     <h1 class="name">{{ user.name }}</h1>
-                    <img style="font-size: 20px" class="edit-icon" @click="isEditModalOpen=true" alt="" src="images/edit-icon.svg">
+                    <img style="font-size: 20px" class="edit-icon" @click="openEditModal()" alt="" src="images/edit-icon.svg">
                 </div>
                 <h3 class="personal-info">{{ user.position }}</h3>
             </div>
@@ -76,14 +76,14 @@
         <div class="overlay"></div>
     </div>
 
-    <div class="modal-container" v-if="isEditModalOpen" @click="openEditModal()">
+    <div class="modal-container" v-if="isEditModalOpen">
         <section class="create-modal">
             <h1>Личная информация</h1>
             <img class="close-create-icon" src="images/close-icon.svg" @click="closeEditModal()">
             <form @submit.prevent="updateUser">
-                <input class="create-input" v-model="user.name" type="text" required placeholder="Имя">
-                <input class="create-input" v-model="user.position" type="text" required placeholder="должность">
-                <button class="modal-button" type="submit" @click="closeEditModal">Редактировать</button>
+                <input class="create-input" v-model="tempUser.name" type="text" required placeholder="Имя">
+                <input class="create-input" v-model="tempUser.position" type="text" required placeholder="должность">
+                <button class="modal-button" type="submit" @click="updateUser">Редактировать</button>
             </form>
         </section>
         <div class="overlay" v-if="isEditModalOpen"></div>
@@ -94,6 +94,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="scripts/gallery-script.js"></script>
-    
+
 </body>
 </html>

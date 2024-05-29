@@ -3,37 +3,37 @@ new Vue({
         data: {
             images: [
                 {
-                    src: '../images/arhiz.jpg',
+                    src: 'images/arhiz.jpg',
                     alt: 'Архыз',
                     title: 'Архыз',
                     liked:false
                 },
                 {
-                    src: '../images/o-slovo-3.jpg',
+                    src: 'images/o-slovo-3.jpg',
                     alt: 'река Снежная',
                     title: 'река Снежная',
                     liked:true
                 },
                 {
-                    src: '../images/ivanovo.jpg',
+                    src: 'images/ivanovo.jpg',
                     alt: 'Иваново',
                     title: 'Иваново',
                     liked:false
                 },
                 {
-                    src: '../images/zub-sufruju.jpg',
+                    src: 'images/zub-sufruju.jpg',
                     alt: 'Зуб суфруджу',
                     title: 'Зуб суфруджу',
                     liked:true
                 },
                 {
-                    src: '../images/hibini.jpg',
+                    src: 'images/hibini.jpg',
                     alt: 'Хибины',
                     title: 'Хибины',
                     liked:false
                 },
                 {
-                    src: '../images/peski.jpg',
+                    src: 'images/peski.jpg',
                     alt: 'Чарские пески',
                     title: 'Чарские пески',
                     liked:true
@@ -54,15 +54,20 @@ new Vue({
                 name: 'Жак-Ив Кусто',
                 position: 'Исследователь океана'
             },
+            tempUser:{}
         },
         methods: {
-            openEditModal(){
+            openEditModal() {
+                this.tempUser = Object.assign({},this.user);
                 this.isEditModalOpen = true;
-                document.body.classList.add('no-scroll');
             },
             closeEditModal(){
                 this.isEditModalOpen = false;
                 document.body.classList.remove('no-scroll');
+            },
+            updateUser() {
+                this.user = Object.assign({},this.tempUser);
+                this.closeEditModal();
             },
             openFullScreenImageModal(image){
                 this.image = Object.assign({}, image);
